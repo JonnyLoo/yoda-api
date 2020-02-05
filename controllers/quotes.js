@@ -2,11 +2,24 @@ const Models = require('../models');
 
 const Quote = Models.Quote;
 
+const getQuotes = async (req, res) => {
+  console.log('GET ALL QUOTES');
+
+  try {
+    const quotes = await Quote.find({});
+
+    return res.status(200).json(quotes);
+  }
+  catch (err) {
+    return res.status(500).json({ error: err });
+  }
+}
+
 const getQuote = async (req, res) => {
   console.log('GET QUOTE');
 
   try {
-    const quote = await Quote.find({ id: req.params.id });
+    const quote = await Quote.find({ _id: req.params.id });
 
     return res.status(200).json(quote);
   }
@@ -37,7 +50,7 @@ const deleteQuote = async (req, res) => {
   console.log('DELETE QUOTE');
 
   try {
-    const deleted = await Quote.deleteOne({ id: req.params.id });
+    const deleted = await Quote.deleteOne({ _id: req.params.id });
 
     return res.status(200).json({ success: true, quote: deleted });
   }
@@ -54,7 +67,7 @@ const updateQuote = async (req, res) => {
   if (req.body.yodish) updatedQuote.yodish = req.body.yodish;
 
   try {
-    const updated = await Quote.updateOne({ id: req.params.id }, updatedQuote);
+    const updated = await Quote.updateOne({ _id: req.params.id }, updatedQuote);
 
     return res.status(200).json({ success: true, quote: updated });
   }
@@ -64,6 +77,7 @@ const updateQuote = async (req, res) => {
 }
 
 module.exports = {
+  getQuotes,
   getQuote,
   createQuote,
   deleteQuote,
