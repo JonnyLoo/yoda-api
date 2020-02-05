@@ -1,7 +1,7 @@
 const express = require('express');
+const ROUTER = express.Router();
 
 const quotes = require('./quotes');
-const ROUTER = express.Router();
 
 ROUTER.use('/quotes', quotes);
 

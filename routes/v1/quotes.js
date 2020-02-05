@@ -1,6 +1,6 @@
 const express = require('express');
-
 const ROUTER = express.Router();
+
 const controller = require('../../controllers');
 
 ROUTER.get('/', controller.getQuotes);
