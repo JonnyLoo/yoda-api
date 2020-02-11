@@ -9,8 +9,7 @@ const getQuotes = async (req, res) => {
     const quotes = await Quote.find({});
 
     return res.status(200).json(quotes);
-  }
-  catch (err) {
+  } catch (err) {
     return res.status(500).json({ error: err });
   }
 }
@@ -22,8 +21,7 @@ const getQuote = async (req, res) => {
     const quote = await Quote.find({ _id: req.params.id });
 
     return res.status(200).json(quote);
-  }
-  catch (err) {
+  } catch (err) {
     return res.status(500).json({ error: err });
   }
 }
@@ -40,8 +38,7 @@ const createQuote = async (req, res) => {
     const created = await quote.save();
 
     return res.status(201).json({ success: true, quote: created });
-  }
-  catch (err) {
+  } catch (err) {
     return res.status(500).json({ error: err });
   }
 }
@@ -53,8 +50,7 @@ const deleteQuote = async (req, res) => {
     const deleted = await Quote.deleteOne({ _id: req.params.id });
 
     return res.status(200).json({ success: true, quote: deleted });
-  }
-  catch (err) {
+  } catch (err) {
     return res.status(500).json({ error: err });
   }
 }
@@ -70,8 +66,22 @@ const updateQuote = async (req, res) => {
     const updated = await Quote.updateOne({ _id: req.params.id }, updatedQuote);
 
     return res.status(200).json({ success: true, quote: updated });
+  } catch (err) {
+    return res.status(500).json({ error: err });
   }
-  catch (err) {
+}
+
+const getRandomQuote = async (req, res) => {
+  console.log('GET RANDOM QUOTE');
+
+  try {
+    const count = await Quote.count();
+    const random = Math.floor(Math.random() * count);
+
+    const quote = await Quote.findOne().skip(random);
+
+    return res.status(200).json(quote);
+  } catch (err) {
     return res.status(500).json({ error: err });
   }
 }
@@ -81,5 +91,6 @@ module.exports = {
   getQuote,
   createQuote,
   deleteQuote,
-  updateQuote
+  updateQuote,
+  getRandomQuote
 };
