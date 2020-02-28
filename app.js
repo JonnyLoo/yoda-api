@@ -30,6 +30,7 @@ db.on('error', () => {
 
 app.use('/yoda', router);
 
-app.listen(config.PORT, () => {
+const PORT = process.env.PORT || config.PORT;
+app.listen(PORT, () => {
   console.log(`app listening on port ${config.PORT}`);
 });
